@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">QNotes</string>
+    <string name="title_activity_show_note">ShowNoteActivity</string>
 </resources>
