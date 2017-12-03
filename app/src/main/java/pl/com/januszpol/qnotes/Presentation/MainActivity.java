@@ -3,12 +3,13 @@ package pl.com.januszpol.qnotes.Presentation;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +20,10 @@ import pl.com.januszpol.qnotes.R;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    NotesListFragment notesListFragment;
+    CreateNoteFragment createNoteFragment;
+    FloatingActionButton fab;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,12 +31,12 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                goToCreateNote();
+                fab.hide();
             }
         });
 
@@ -43,6 +48,39 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        if (findViewById(R.id.fragmentContainer) != null)
+        {
+            if (savedInstanceState != null)
+            {
+                return;
+            }
+            notesListFragment = new NotesListFragment();
+            notesListFragment.setArguments(getIntent().getExtras());
+            createNoteFragment = new CreateNoteFragment();
+            createNoteFragment.setArguments(getIntent().getExtras());
+            getSupportFragmentManager().beginTransaction().add(R.id.fragmentContainer, notesListFragment).commit();
+        }
+    }
+
+    void goToList()
+    {
+        if(notesListFragment==null)
+            notesListFragment=new NotesListFragment();
+        fab.show();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragmentContainer, notesListFragment);
+        transaction.commit();
+    }
+
+    void goToCreateNote()
+    {
+        if(createNoteFragment==null)
+            createNoteFragment = new CreateNoteFragment();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragmentContainer, createNoteFragment);
+        transaction.commit();
     }
 
     @Override

@@ -8,4 +8,13 @@
     tools:context="pl.com.januszpol.qnotes.Presentation.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width="368dp"
+        android:name="BlankFragment"
+        android:layout_height="350dp"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="8dp">
+    </FrameLayout>
+
 </android.support.constraint.ConstraintLayout>
