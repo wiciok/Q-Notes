@@ -5,14 +5,20 @@ import java.util.List;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 public class Note extends RealmObject {
+    @PrimaryKey
+    private long id;
+
     private String topic;
     private String description;
     private Date creationDate;
     private Date lastEditDate;
     private RealmList<Attachment> attachmentsList;          //should be Attachable, but RealmList doesn't support polymorphism
     private RealmList<Notification> notificationsList;
+
+    public static String id_field = "id";
 
     public Note() {
         this.creationDate=new Date();
@@ -31,6 +37,13 @@ public class Note extends RealmObject {
         this.description=description;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getTopic() {
         return topic;
