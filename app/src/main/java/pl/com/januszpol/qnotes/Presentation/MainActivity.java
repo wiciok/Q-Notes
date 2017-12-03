@@ -2,7 +2,6 @@ package pl.com.januszpol.qnotes.Presentation;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -15,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import pl.com.januszpol.qnotes.Presentation.NotesList.NotesListFragment;
 import pl.com.januszpol.qnotes.R;
 
 public class MainActivity extends AppCompatActivity
