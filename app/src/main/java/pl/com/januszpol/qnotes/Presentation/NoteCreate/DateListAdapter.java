@@ -63,4 +63,9 @@ public class DateListAdapter extends ArrayAdapter<Date> {
     public class ViewHolder {
         TextView title;
     }
+
+    public Date getItem(int position)
+    {
+        return data.get(position);
+    }
 }
