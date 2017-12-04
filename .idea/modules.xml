@@ -3,10 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Q-Notes.iml" filepath="$PROJECT_DIR$/Q-Notes.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/Q-Notes.iml" filepath="$PROJECT_DIR$/.idea/Q-Notes.iml" />
-      <module fileurl="file://D:/DEV/Android/Projects/Q-Notes/Q-Notes.iml" filepath="D:/DEV/Android/Projects/Q-Notes/Q-Notes.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://D:/DEV/Android/Projects/Q-Notes/app/app.iml" filepath="D:/DEV/Android/Projects/Q-Notes/app/app.iml" />
     </modules>
   </component>
 </project>
