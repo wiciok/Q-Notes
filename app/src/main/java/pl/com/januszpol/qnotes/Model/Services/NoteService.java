@@ -5,6 +5,7 @@ import android.content.Context;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 import pl.com.januszpol.qnotes.Model.ObjectModel.Note;
 
@@ -12,7 +13,20 @@ public class NoteService implements INoteService {
     private Realm realmInstance;
 
     public NoteService(){
-        realmInstance=Realm.getDefaultInstance();
+         /*RealmConfiguration config = new RealmConfiguration.Builder()
+                .name("myrealm.realm")
+                .encryptionKey(getKey())
+                .schemaVersion(42)
+                .modules(new MySchemaModule())
+                .migration(new MyMigration())
+                .build();*/
+        RealmConfiguration config = new RealmConfiguration.Builder()
+                .deleteRealmIfMigrationNeeded()
+                .name("qnotesRealm")
+                .schemaVersion(1)
+                .build();
+
+        realmInstance=Realm.getInstance(config);
     }
 
 

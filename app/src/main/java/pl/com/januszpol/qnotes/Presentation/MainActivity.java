@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import pl.com.januszpol.qnotes.Presentation.NoteCreate.CreateNoteFragment;
 import pl.com.januszpol.qnotes.Presentation.NotesList.NotesListFragment;
 import pl.com.januszpol.qnotes.R;
 

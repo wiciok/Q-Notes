@@ -33,7 +33,7 @@ public class NotesListFragment extends Fragment
 
         noteService = new NoteService();
         // TODO - do usunięcia
-        createStartNotes();
+       // createStartNotes();
         notes = noteService.getAllNotes();
         Log.d("NotesListFrg", "size: " + notes.size());
 
