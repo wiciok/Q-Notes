@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -112,6 +113,7 @@ public class CreateNoteFragment extends Fragment
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragmentContainer, notesListFragment);
                 transaction.commit();
+                ((FloatingActionButton)getActivity().findViewById(R.id.fab)).show();
             }
         });
 
