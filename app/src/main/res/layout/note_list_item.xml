@@ -17,11 +17,10 @@
         android:id="@+id/noteListTextViewDesc"
         android:layout_width="fill_parent"
         android:layout_height="100px"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="34dp"
         android:text="Edytuj"
         android:textSize="40px"
-        android:paddingLeft="8dp" />
+        android:paddingLeft="8dp"
+        android:layout_below="@+id/noteListTextViewTitle"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
