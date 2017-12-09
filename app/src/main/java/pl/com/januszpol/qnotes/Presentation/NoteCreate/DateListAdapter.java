@@ -46,7 +46,7 @@ public class DateListAdapter extends ArrayAdapter<Date> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         final Date temp = getItem(position);
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm ");
         String today = formatter.format(temp);
         viewHolder.title.setText(today);
         return convertView;

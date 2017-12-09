@@ -70,7 +70,6 @@ public class NotesListFragment extends Fragment
     public boolean onContextItemSelected(MenuItem item)
     {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        View view = info.targetView;
         final long noteId = noteAdapter.getItemId(info.position);
         final Note note = noteAdapter.getItem(info.position);
         switch (item.getItemId()) {
@@ -100,8 +99,6 @@ public class NotesListFragment extends Fragment
                         })
                         .create();
                 dialog.show();
-
-
                 return true;
             default:
                 return super.onContextItemSelected(item);

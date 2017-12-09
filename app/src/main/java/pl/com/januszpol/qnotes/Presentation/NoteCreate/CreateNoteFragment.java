@@ -1,6 +1,7 @@
 package pl.com.januszpol.qnotes.Presentation.NoteCreate;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -44,11 +46,12 @@ public class CreateNoteFragment extends Fragment
     private EditText topic;
     private EditText description;
     private ListView dataListView;
-    private List<Date> tmp;
     private DatePickerDialog dialog;
     private List<Date>list;
     private DateListAdapter listAdapter;
     private View view;
+    Calendar date;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -56,7 +59,6 @@ public class CreateNoteFragment extends Fragment
         noteService = new NoteService();
         dataListView = view.findViewById(R.id.data_list);
         list=new ArrayList<Date>();
-        tmp= new ArrayList<Date>();
         listAdapter = new DateListAdapter(getActivity(), list);
         dataListView.setAdapter(listAdapter);
 
@@ -70,21 +72,25 @@ public class CreateNoteFragment extends Fragment
             @Override
             public void onClick(View v)
             {
-                Calendar newCalendar = Calendar.getInstance();
-                dialog= new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener()
-                {
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
-                    {
-                        Calendar newDate = Calendar.getInstance();
-                        newDate.set(year, monthOfYear, dayOfMonth);
-                        Date date=newDate.getTime();
-                        list.add(date);
-                        listAdapter = new DateListAdapter(getContext(), list);
-                        dataListView.setAdapter(listAdapter);
+                final Calendar currentDate = Calendar.getInstance();
+                date = Calendar.getInstance();
+                new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        date.set(year, monthOfYear, dayOfMonth);
+                        new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                date.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                                date.set(Calendar.MINUTE, minute);
+                                Date myDate=date.getTime();
+                                list.add(myDate);
+                                listAdapter = new DateListAdapter(getContext(), list);
+                                dataListView.setAdapter(listAdapter);
+                            }
+                        }, currentDate.get(Calendar.HOUR_OF_DAY), currentDate.get(Calendar.MINUTE), false).show();
                     }
-
-                },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-                dialog.show();
+                }, currentDate.get(Calendar.YEAR), currentDate.get(Calendar.MONTH), currentDate.get(Calendar.DATE)).show();
             }
         });
 
