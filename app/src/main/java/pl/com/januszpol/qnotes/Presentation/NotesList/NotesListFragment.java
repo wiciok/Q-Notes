@@ -34,14 +34,13 @@ public class NotesListFragment extends Fragment
 
     private ListView listView;
     private NoteAdapter noteAdapter;
+    private View view;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         noteService = new NoteService();
-        // TODO - do usunięcia
-       // createStartNotes();
         notes = noteService.getAllNotes();
         Log.d("NotesListFrg", "size: " + notes.size());
     }
@@ -49,7 +48,7 @@ public class NotesListFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_notes_list, container, false);
+        view = inflater.inflate(R.layout.fragment_notes_list, container, false);
         listView = (ListView) view.findViewById(R.id.notesListView);
         noteAdapter = new NoteAdapter(getActivity(), notes);
         listView.setAdapter(noteAdapter);
@@ -88,6 +87,7 @@ public class NotesListFragment extends Fragment
                             public void onClick(DialogInterface dialog, int which)
                             {
                                 noteService.removeNote(note);
+                                updateNotesList();
                                 Toast.makeText(getActivity(),"Notatka została usunięta",Toast.LENGTH_SHORT).show();
                             }
                         })
@@ -106,5 +106,13 @@ public class NotesListFragment extends Fragment
             default:
                 return super.onContextItemSelected(item);
         }
+    }
+
+    void updateNotesList()
+    {
+        notes = noteService.getAllNotes();
+        listView = (ListView) view.findViewById(R.id.notesListView);
+        noteAdapter = new NoteAdapter(getActivity(), notes);
+        listView.setAdapter(noteAdapter);
     }
 }
