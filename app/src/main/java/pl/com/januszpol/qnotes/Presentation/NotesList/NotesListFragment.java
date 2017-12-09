@@ -1,21 +1,29 @@
 package pl.com.januszpol.qnotes.Presentation.NotesList;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.app.Fragment;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.List;
 
 import pl.com.januszpol.qnotes.Model.ObjectModel.Note;
 import pl.com.januszpol.qnotes.Model.Services.INoteService;
 import pl.com.januszpol.qnotes.Model.Services.NoteService;
+import pl.com.januszpol.qnotes.Presentation.MainActivity;
 import pl.com.januszpol.qnotes.R;
 
 
@@ -36,7 +44,6 @@ public class NotesListFragment extends Fragment
        // createStartNotes();
         notes = noteService.getAllNotes();
         Log.d("NotesListFrg", "size: " + notes.size());
-
     }
 
     @Override
@@ -46,25 +53,58 @@ public class NotesListFragment extends Fragment
         listView = (ListView) view.findViewById(R.id.notesListView);
         noteAdapter = new NoteAdapter(getActivity(), notes);
         listView.setAdapter(noteAdapter);
-
+        registerForContextMenu(listView);
         return view;
     }
 
-    private void createStartNotes() {
-        removeOldNotes();
-        addNewNotes();
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        if (v.getId() == R.id.notesListView)
+        {
+            MenuInflater inflater = getActivity().getMenuInflater();
+            inflater.inflate(R.menu.menu_notes_list, menu);
+        }
     }
 
-    private void removeOldNotes() {
-        List<Note> oldNotes = noteService.getAllNotes();
-        for (Note note : oldNotes)
-            noteService.removeNote(note);
-    }
+    @Override
+    public boolean onContextItemSelected(MenuItem item)
+    {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        View view = info.targetView;
+        final long noteId = noteAdapter.getItemId(info.position);
+        final Note note = noteAdapter.getItem(info.position);
+        switch (item.getItemId()) {
+            case R.id.edit:
+                ;
+                return true;
+            case R.id.delete:
+                AlertDialog dialog = new AlertDialog.Builder(getActivity())
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setTitle("Usuwanie notatki")
+                        .setMessage("Czy na pewno chcesz usunąć notatkę: "+note.getTopic()+" ?")
+                        .setPositiveButton("Tak", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                                noteService.removeNote(note);
+                                Toast.makeText(getActivity(),"Notatka została usunięta",Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .setNegativeButton("Nie", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                                dialog.dismiss();
+                            }
+                        })
+                        .create();
+                dialog.show();
 
-    private void addNewNotes() {
-        for (int i = 1; i <= 10; i++) {
-            Note note = new Note("Topic " + i, "DescriptionDescription DescriptionDescription " + i);
-            noteService.addNote(note);
+
+                return true;
+            default:
+                return super.onContextItemSelected(item);
         }
     }
 }
