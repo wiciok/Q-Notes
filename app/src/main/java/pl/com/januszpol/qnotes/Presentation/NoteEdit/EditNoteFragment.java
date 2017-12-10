@@ -48,6 +48,7 @@ public class EditNoteFragment extends Fragment {
     private DateListAdapter listAdapter;
     private View view;
     private Calendar date;
+    private Note editNote;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -56,7 +57,7 @@ public class EditNoteFragment extends Fragment {
         noteService = new NoteService();
         Bundle args = getArguments();
         long noteId = args.getLong("noteId");
-        Note editNote= noteService.getNoteById(noteId);
+        editNote= noteService.getNoteById(noteId);
         topic=view.findViewById(R.id.topic_edit);
         description=view.findViewById(R.id.description_edit);
 
@@ -108,18 +109,22 @@ public class EditNoteFragment extends Fragment {
             @Override
             public void onClick(View v)
             {
-                Note newNote=new Note();
-                newNote.setTopic(topic.getText().toString());
-                newNote.setDescription(description.getText().toString());
-                List<Notification> listNoteNotification=newNote.getNotificationsList();
+                editNote.setTopic(topic.getText().toString());
+                editNote.setDescription(description.getText().toString());
+
+               /* Aktualizacja powiadomień
+                List<Notification> listNoteNotification=editNote.getNotificationsList();
+
+                listNoteNotification.clear();
                 for(Date x:list)
                 {
                     Notification newNotification=new Notification();
                     newNotification.setExecuteDate(x);
                     listNoteNotification.add(newNotification);
                 }
+                 */
 
-                //noteService.addNote(newNote);
+                noteService.updateNote(editNote);
 
                 NotesListFragment notesListFragment = new NotesListFragment();
                 notesListFragment.setArguments(getActivity().getIntent().getExtras());

@@ -45,6 +45,12 @@ public class NoteService implements INoteService {
         realmInstance.commitTransaction();
     }
 
+    public void updateNote(Note note){
+        realmInstance.beginTransaction();
+        realmInstance.copyToRealmOrUpdate(note);
+        realmInstance.commitTransaction();
+    }
+
     public void removeNote(Note note) {
         realmInstance.beginTransaction();
         RealmResults<Note> foundNote = realmInstance.where(Note.class).equalTo(Note.id_field, note.getId()).findAll();

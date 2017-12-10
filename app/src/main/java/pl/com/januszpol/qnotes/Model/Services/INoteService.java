@@ -19,4 +19,6 @@ public interface INoteService {
 
     public Note getNoteById(long id);
 
+    public void updateNote(Note note);
+
 }
