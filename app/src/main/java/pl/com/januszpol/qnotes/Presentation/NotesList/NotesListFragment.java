@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -24,6 +25,7 @@ import pl.com.januszpol.qnotes.Model.ObjectModel.Note;
 import pl.com.januszpol.qnotes.Model.Services.INoteService;
 import pl.com.januszpol.qnotes.Model.Services.NoteService;
 import pl.com.januszpol.qnotes.Presentation.MainActivity;
+import pl.com.januszpol.qnotes.Presentation.NoteEdit.EditNoteFragment;
 import pl.com.januszpol.qnotes.R;
 
 
@@ -74,7 +76,13 @@ public class NotesListFragment extends Fragment
         final Note note = noteAdapter.getItem(info.position);
         switch (item.getItemId()) {
             case R.id.edit:
-                ;
+                EditNoteFragment editNoteFragment = new EditNoteFragment();
+                Bundle args = new Bundle();
+                args.putLong("noteId", noteId);
+                editNoteFragment.setArguments(args);
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragmentContainer, editNoteFragment);
+                transaction.commit();
                 return true;
             case R.id.delete:
                 AlertDialog dialog = new AlertDialog.Builder(getActivity())

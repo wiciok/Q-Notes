@@ -1,11 +1,9 @@
 package pl.com.januszpol.qnotes.Presentation.NoteEdit;
 
 import android.app.DatePickerDialog;
-        import android.app.TimePickerDialog;
-        import android.content.DialogInterface;
-        import android.content.Intent;
-        import android.os.Bundle;
-        import android.support.annotation.Nullable;
+import android.app.TimePickerDialog;
+import android.content.DialogInterface;
+import android.os.Bundle;
         import android.support.design.widget.FloatingActionButton;
         import android.support.v4.app.Fragment;
         import android.support.v4.app.FragmentTransaction;
@@ -46,24 +44,34 @@ public class EditNoteFragment extends Fragment {
     private EditText topic;
     private EditText description;
     private ListView dataListView;
-    private DatePickerDialog dialog;
     private List<Date> list;
     private DateListAdapter listAdapter;
     private View view;
-    Calendar date;
+    private Calendar date;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         view= inflater.inflate(R.layout.fragment_edit_note, container, false);
         noteService = new NoteService();
-        dataListView = view.findViewById(R.id.data_list);
-        list=new ArrayList<Date>();
-        listAdapter = new DateListAdapter(getActivity(), list);
-        dataListView.setAdapter(listAdapter);
+        Bundle args = getArguments();
+        long noteId = args.getLong("noteId");
+        Note editNote= noteService.getNoteById(noteId);
+        topic=view.findViewById(R.id.topic_edit);
+        description=view.findViewById(R.id.description_edit);
 
-        topic=view.findViewById(R.id.topic);
-        description=view.findViewById(R.id.description);
+        if(editNote!=null) {
+           topic.setText(editNote.getTopic());
+           description.setText(editNote.getDescription());
+            dataListView = view.findViewById(R.id.data_list_edit);
+            list=new ArrayList<Date>();
+            for(Notification x: editNote.getNotificationsList())
+            {
+                list.add(x.getExecuteDate());
+            }
+            listAdapter = new DateListAdapter(getActivity(), list);
+            dataListView.setAdapter(listAdapter);
+        }
 
         EditNotification=view.findViewById(R.id.edit_notification);
 
@@ -110,7 +118,8 @@ public class EditNoteFragment extends Fragment {
                     newNotification.setExecuteDate(x);
                     listNoteNotification.add(newNotification);
                 }
-                noteService.addNote(newNote);
+
+                //noteService.addNote(newNote);
 
                 NotesListFragment notesListFragment = new NotesListFragment();
                 notesListFragment.setArguments(getActivity().getIntent().getExtras());

@@ -6,7 +6,7 @@
     android:columnCount="1"
     android:orientation="horizontal"
     android:rowCount="4"
-    tools:context="pl.com.januszpol.qnotes.Presentation.NoteCreate.EditNoteFragment">
+    tools:context="pl.com.januszpol.qnotes.Presentation.NoteEdit.EditNoteFragment">
 
     <EditText
         android:id="@+id/topic_edit"

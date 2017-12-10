@@ -21,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.Toast;
 
 import pl.com.januszpol.qnotes.Presentation.NoteCreate.CreateNoteFragment;
+import pl.com.januszpol.qnotes.Presentation.NoteEdit.EditNoteFragment;
 import pl.com.januszpol.qnotes.Presentation.NotesList.NotesListFragment;
 import pl.com.januszpol.qnotes.R;
 
@@ -29,6 +30,8 @@ public class MainActivity extends AppCompatActivity
 
     NotesListFragment notesListFragment;
     CreateNoteFragment createNoteFragment;
+
+
     FloatingActionButton fab;
 
     @Override

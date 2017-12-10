@@ -34,6 +34,10 @@ public class NoteService implements INoteService {
         return realmInstance.where(Note.class).findAll();
     }
 
+    public Note getNoteById(long id){
+        return realmInstance.where(Note.class).equalTo("id", id).findFirst();
+    }
+
     public void addNote(Note newNote){
         newNote.setId(getNextId());
         realmInstance.beginTransaction();

@@ -17,4 +17,6 @@ public interface INoteService {
 
     public void removeNote(Note note);
 
+    public Note getNoteById(long id);
+
 }

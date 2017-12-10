@@ -63,4 +63,9 @@ public class NoteAdapter extends ArrayAdapter<Note> {
         TextView title;
         TextView description;
     }
+
+    public long getItemId(int position)
+    {
+        return data.get(position).getId();
+    }
 }
