@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
+import pl.com.januszpol.qnotes.Model.Services.ColorService;
 import pl.com.januszpol.qnotes.Presentation.NoteCreate.CreateNoteFragment;
 import pl.com.januszpol.qnotes.Presentation.NoteEdit.EditNoteFragment;
 import pl.com.januszpol.qnotes.Presentation.NotesList.NotesListFragment;
@@ -30,9 +31,9 @@ public class MainActivity extends AppCompatActivity
 
     NotesListFragment notesListFragment;
     CreateNoteFragment createNoteFragment;
-
-
     FloatingActionButton fab;
+
+    private ColorService colorService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +72,15 @@ public class MainActivity extends AppCompatActivity
             createNoteFragment.setArguments(getIntent().getExtras());
             getSupportFragmentManager().beginTransaction().add(R.id.fragmentContainer, notesListFragment).commit();
         }
+
+
+        colorService = new ColorService(this);
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        colorService.RestoreColor();
     }
 
     void goToList()
@@ -119,10 +129,15 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            runSettingsActivity();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void runSettingsActivity(){
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
