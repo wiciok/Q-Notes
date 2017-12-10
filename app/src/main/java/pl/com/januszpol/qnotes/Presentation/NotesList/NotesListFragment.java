@@ -23,6 +23,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import pl.com.januszpol.qnotes.Model.ObjectModel.Note;
+import pl.com.januszpol.qnotes.Model.Services.FontService;
 import pl.com.januszpol.qnotes.Model.Services.INoteService;
 import pl.com.januszpol.qnotes.Model.Services.NoteService;
 import pl.com.januszpol.qnotes.Presentation.MainActivity;
@@ -54,6 +55,9 @@ public class NotesListFragment extends Fragment
         view = inflater.inflate(R.layout.fragment_notes_list, container, false);
         listView = (ListView) view.findViewById(R.id.notesListView);
         noteAdapter = new NoteAdapter(getActivity(), notes);
+
+        FontService.initFont(getActivity());
+
         listView.setAdapter(noteAdapter);
         registerForContextMenu(listView);
         return view;
