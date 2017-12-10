@@ -31,11 +31,13 @@ public class NoteService implements INoteService {
 
 
     public List<Note> getAllNotes(){
-        return realmInstance.where(Note.class).findAll();
+        List<Note> notes = realmInstance.where(Note.class).findAll();
+        return realmInstance.copyFromRealm(notes);
     }
 
     public Note getNoteById(long id){
-        return realmInstance.where(Note.class).equalTo("id", id).findFirst();
+        Note note = realmInstance.where(Note.class).equalTo("id", id).findFirst();
+        return realmInstance.copyFromRealm(note);
     }
 
     public void addNote(Note newNote){
