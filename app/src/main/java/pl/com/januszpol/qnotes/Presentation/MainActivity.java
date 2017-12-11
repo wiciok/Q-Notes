@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity
             if (-1 != noteId)
                 goToNote(noteId);
 
-            getSupportFragmentManager().beginTransaction().add(R.id.fragmentContainer, notesListFragment).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.fragmentContainer, notesListFragment,"NOTES_LIST_FRAGMENT").commit();
         }
 
 
@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity
         showNoteFragment.setArguments(args);
         ((FloatingActionButton)findViewById(R.id.fab)).hide();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.fragmentContainer, notesListFragment);
+        transaction.add(R.id.fragmentContainer, notesListFragment,"NOTES_LIST_FRAGMENT");
         transaction.replace(R.id.fragmentContainer, showNoteFragment);
         transaction.commit();
     }
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity
             notesListFragment=new NotesListFragment();
         fab.show();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragmentContainer, notesListFragment);
+        transaction.replace(R.id.fragmentContainer, notesListFragment, "NOTES_LIST_FRAGMENT");
         transaction.commit();
     }
 
@@ -140,7 +140,13 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            Log.d("mainBack","cnt: " + getSupportFragmentManager().getBackStackEntryCount());
+            NotesListFragment fragment = (NotesListFragment) getSupportFragmentManager().findFragmentByTag("NOTES_LIST_FRAGMENT");
+            if (fragment != null && fragment.isVisible()) {
+                super.onBackPressed();
+            } else {
+                goToList();
+            }
         }
     }
 
