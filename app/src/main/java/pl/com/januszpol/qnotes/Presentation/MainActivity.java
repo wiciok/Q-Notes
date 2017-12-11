@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -61,16 +62,45 @@ public class MainActivity extends AppCompatActivity
 
         if (findViewById(R.id.fragmentContainer) != null)
         {
+            Intent intent = getIntent();
+            Bundle bundle = intent.getExtras();
+            if (bundle != null)
+                for (String key : bundle.keySet()) {
+                    Object value = bundle.get(key);
+                    if (value != null)
+                    Log.d("MAIN", String.format("%s %s (%s)", key,
+                            value.toString(), value.getClass().getName()));
+                }
+            long noteId = intent.getLongExtra("note_id", -1);
             if (savedInstanceState != null)
             {
                 return;
             }
+
+
             notesListFragment = new NotesListFragment();
             notesListFragment.setArguments(getIntent().getExtras());
             createNoteFragment = new CreateNoteFragment();
             createNoteFragment.setArguments(getIntent().getExtras());
+
+            Log.d("mainact: ", "noteId2: " + noteId);
+            if (-1 != noteId)
+                goToNote(noteId);
+
             getSupportFragmentManager().beginTransaction().add(R.id.fragmentContainer, notesListFragment).commit();
         }
+    }
+
+    private void goToNote(long noteId) {
+        EditNoteFragment editNoteFragment = new EditNoteFragment();
+        Bundle args = new Bundle();
+        args.putLong("noteId", noteId);
+        editNoteFragment.setArguments(args);
+        ((FloatingActionButton)findViewById(R.id.fab)).hide();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.fragmentContainer, notesListFragment);
+        transaction.replace(R.id.fragmentContainer, editNoteFragment);
+        transaction.commit();
     }
 
     void goToList()

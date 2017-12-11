@@ -1,6 +1,7 @@
 package pl.com.januszpol.qnotes;
 
 import android.app.Application;
+import android.content.Context;
 
 import io.realm.Realm;
 
@@ -10,9 +11,16 @@ import io.realm.Realm;
 
 public class QnotesApplication extends Application {
 
+    private static Context context;
+
     @Override
     public void onCreate() {
-        Realm.init(getApplicationContext());
         super.onCreate();
+        Realm.init(getApplicationContext());
+        QnotesApplication.context = getApplicationContext();
+    }
+
+    public static Context getAppContext() {
+        return QnotesApplication.context;
     }
 }

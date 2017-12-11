@@ -15,25 +15,20 @@ import android.os.Bundle;
         import android.widget.Button;
         import android.widget.DatePicker;
         import android.widget.EditText;
-        import android.widget.ImageView;
-        import android.widget.ListAdapter;
-        import android.widget.ListView;
+import android.widget.ListView;
         import android.widget.TimePicker;
         import android.widget.Toast;
 
-        import java.text.SimpleDateFormat;
-        import java.util.ArrayList;
+import java.util.ArrayList;
         import java.util.Calendar;
         import java.util.Date;
         import java.util.List;
 
-        import io.realm.RealmList;
-        import pl.com.januszpol.qnotes.Model.ObjectModel.Note;
-        import pl.com.januszpol.qnotes.Model.ObjectModel.Notification;
-        import pl.com.januszpol.qnotes.Model.Services.INoteService;
+import pl.com.januszpol.qnotes.Model.ObjectModel.Note;
+import pl.com.januszpol.qnotes.Model.ObjectModel.NoteNotification;
+import pl.com.januszpol.qnotes.Model.Services.INoteService;
         import pl.com.januszpol.qnotes.Model.Services.NoteService;
-        import pl.com.januszpol.qnotes.Presentation.MainActivity;
-        import pl.com.januszpol.qnotes.Presentation.NotesList.DateListAdapter;
+import pl.com.januszpol.qnotes.Presentation.NotesList.DateListAdapter;
         import pl.com.januszpol.qnotes.Presentation.NotesList.NotesListFragment;
         import pl.com.januszpol.qnotes.R;
 
@@ -66,7 +61,7 @@ public class EditNoteFragment extends Fragment {
            description.setText(editNote.getDescription());
             dataListView = view.findViewById(R.id.data_list_edit);
             list=new ArrayList<Date>();
-            for(Notification x: editNote.getNotificationsList())
+            for(NoteNotification x: editNote.getNotificationsList())
             {
                 list.add(x.getExecuteDate());
             }
@@ -112,17 +107,16 @@ public class EditNoteFragment extends Fragment {
                 editNote.setTopic(topic.getText().toString());
                 editNote.setDescription(description.getText().toString());
 
-               /* Aktualizacja powiadomień
-                List<Notification> listNoteNotification=editNote.getNotificationsList();
+               /* Aktualizacja powiadomień */
+                List<NoteNotification> listNoteNotification=editNote.getNotificationsList();
 
                 listNoteNotification.clear();
                 for(Date x:list)
                 {
-                    Notification newNotification=new Notification();
+                    NoteNotification newNotification=new NoteNotification();
                     newNotification.setExecuteDate(x);
                     listNoteNotification.add(newNotification);
                 }
-                 */
 
                 noteService.updateNote(editNote);
 

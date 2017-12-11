@@ -1,6 +1,7 @@
 package pl.com.januszpol.qnotes.Model.Services;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.util.List;
 
@@ -8,6 +9,7 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 import pl.com.januszpol.qnotes.Model.ObjectModel.Note;
+import pl.com.januszpol.qnotes.notifications.NotificationManager;
 
 public class NoteService implements INoteService {
     private Realm realmInstance;
@@ -45,15 +47,20 @@ public class NoteService implements INoteService {
         realmInstance.beginTransaction();
         realmInstance.copyToRealm(newNote);
         realmInstance.commitTransaction();
+        NotificationManager.scheduleNoteNotifications(newNote);
     }
 
     public void updateNote(Note note){
+        Note oldNote = getNoteById(note.getId());
+        NotificationManager.removeNoteNotifications(oldNote);
         realmInstance.beginTransaction();
         realmInstance.copyToRealmOrUpdate(note);
         realmInstance.commitTransaction();
+        NotificationManager.scheduleNoteNotifications(note);
     }
 
     public void removeNote(Note note) {
+        NotificationManager.removeNoteNotifications(note);
         realmInstance.beginTransaction();
         RealmResults<Note> foundNote = realmInstance.where(Note.class).equalTo(Note.id_field, note.getId()).findAll();
         foundNote.deleteAllFromRealm();
