@@ -32,6 +32,7 @@ import pl.com.januszpol.qnotes.Model.Services.INoteService;
 import pl.com.januszpol.qnotes.Model.Services.NoteService;
 import pl.com.januszpol.qnotes.Presentation.MainActivity;
 import pl.com.januszpol.qnotes.Presentation.NoteEdit.EditNoteFragment;
+import pl.com.januszpol.qnotes.Presentation.noteshow.ShowNoteFragment;
 import pl.com.januszpol.qnotes.R;
 import pl.com.januszpol.qnotes.notifications.NotificationPublisher;
 
@@ -60,11 +61,33 @@ public class NotesListFragment extends Fragment
 
         view = inflater.inflate(R.layout.fragment_notes_list, container, false);
         listView = (ListView) view.findViewById(R.id.notesListView);
+        setListOnClickListener();
         noteAdapter = new NoteAdapter(getActivity(), notes);
         listView.setAdapter(noteAdapter);
         registerForContextMenu(listView);
         Log.d("onCreateView", "");
         return view;
+    }
+
+    private void setListOnClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                long noteId = noteAdapter.getData().get(position).getId();
+                goToShowNoteActivity(noteId);
+            }
+        });
+    }
+
+    private void goToShowNoteActivity(long noteId) {
+        ShowNoteFragment showNoteFragment = new ShowNoteFragment();
+        Bundle args = new Bundle();
+        args.putLong("noteId", noteId);
+        showNoteFragment.setArguments(args);
+        ((FloatingActionButton)getActivity().findViewById(R.id.fab)).hide();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragmentContainer, showNoteFragment);
+        transaction.commit();
     }
 
     @Override

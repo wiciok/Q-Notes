@@ -24,6 +24,7 @@ import android.widget.Toast;
 import pl.com.januszpol.qnotes.Presentation.NoteCreate.CreateNoteFragment;
 import pl.com.januszpol.qnotes.Presentation.NoteEdit.EditNoteFragment;
 import pl.com.januszpol.qnotes.Presentation.NotesList.NotesListFragment;
+import pl.com.januszpol.qnotes.Presentation.noteshow.ShowNoteFragment;
 import pl.com.januszpol.qnotes.R;
 
 public class MainActivity extends AppCompatActivity
@@ -92,14 +93,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void goToNote(long noteId) {
-        EditNoteFragment editNoteFragment = new EditNoteFragment();
+        ShowNoteFragment showNoteFragment = new ShowNoteFragment();
         Bundle args = new Bundle();
         args.putLong("noteId", noteId);
-        editNoteFragment.setArguments(args);
+        showNoteFragment.setArguments(args);
         ((FloatingActionButton)findViewById(R.id.fab)).hide();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.fragmentContainer, notesListFragment);
-        transaction.replace(R.id.fragmentContainer, editNoteFragment);
+        transaction.replace(R.id.fragmentContainer, showNoteFragment);
         transaction.commit();
     }
 
