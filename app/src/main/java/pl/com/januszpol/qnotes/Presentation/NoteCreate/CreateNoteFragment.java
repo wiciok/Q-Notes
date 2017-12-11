@@ -3,9 +3,7 @@ package pl.com.januszpol.qnotes.Presentation.NoteCreate;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -17,24 +15,19 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import io.realm.RealmList;
 import pl.com.januszpol.qnotes.Model.ObjectModel.Note;
-import pl.com.januszpol.qnotes.Model.ObjectModel.Notification;
+import pl.com.januszpol.qnotes.Model.ObjectModel.NoteNotification;
 import pl.com.januszpol.qnotes.Model.Services.INoteService;
 import pl.com.januszpol.qnotes.Model.Services.NoteService;
-import pl.com.januszpol.qnotes.Presentation.MainActivity;
 import pl.com.januszpol.qnotes.Presentation.NotesList.DateListAdapter;
 import pl.com.januszpol.qnotes.Presentation.NotesList.NotesListFragment;
 import pl.com.januszpol.qnotes.R;
@@ -83,6 +76,7 @@ public class CreateNoteFragment extends Fragment
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                                 date.set(Calendar.HOUR_OF_DAY, hourOfDay);
                                 date.set(Calendar.MINUTE, minute);
+                                date.set(Calendar.SECOND, 0);
                                 Date myDate=date.getTime();
                                 list.add(myDate);
                                 listAdapter = new DateListAdapter(getContext(), list);
@@ -103,12 +97,12 @@ public class CreateNoteFragment extends Fragment
                 Note newNote=new Note();
                 newNote.setTopic(topic.getText().toString());
                 newNote.setDescription(description.getText().toString());
-                List<Notification> listNoteNotification=newNote.getNotificationsList();
+                List<NoteNotification> listNoteNoteNotification =newNote.getNotificationsList();
                 for(Date x:list)
                 {
-                    Notification newNotification=new Notification();
-                    newNotification.setExecuteDate(x);
-                    listNoteNotification.add(newNotification);
+                    NoteNotification newNoteNotification =new NoteNotification();
+                    newNoteNotification.setExecuteDate(x);
+                    listNoteNoteNotification.add(newNoteNotification);
                 }
                 noteService.addNote(newNote);
 

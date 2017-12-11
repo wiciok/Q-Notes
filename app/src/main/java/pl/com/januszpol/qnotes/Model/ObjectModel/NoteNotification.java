@@ -8,10 +8,10 @@ import io.realm.RealmObject;
  * Created by wk on 29.11.2017.
  */
 
-public class Notification extends RealmObject {
+public class NoteNotification extends RealmObject {
     private Date executeDate;
 
-    public Notification(){
+    public NoteNotification(){
         executeDate = new Date();
     }
 

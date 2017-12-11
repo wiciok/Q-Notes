@@ -1,0 +1,45 @@
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/GridLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:columnCount="1"
+    android:orientation="horizontal"
+    android:rowCount="4"
+    tools:context="pl.com.januszpol.qnotes.Presentation.NoteEdit.EditNoteFragment">
+
+    <EditText
+        android:id="@+id/topic_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Tytuł" />
+
+    <EditText
+        android:id="@+id/description_edit"
+        android:layout_width="match_parent"
+        android:layout_height="174dp"
+        android:layout_column="0"
+        android:layout_row="3"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        android:text="Treść" />
+
+    <Button
+        android:id="@+id/edit_notification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Dodaj powiadomienie" />
+
+    <ListView
+        android:id="@+id/data_list_edit"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <Button
+        android:id="@+id/edit_note"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Edytuj" />
+</GridLayout>

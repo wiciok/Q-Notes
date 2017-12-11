@@ -16,7 +16,7 @@ public class Note extends RealmObject {
     private Date creationDate;
     private Date lastEditDate;
     private RealmList<Attachment> attachmentsList;          //should be Attachable, but RealmList doesn't support polymorphism
-    private RealmList<Notification> notificationsList;
+    private RealmList<NoteNotification> notificationsList;
 
     public static String id_field = "id";
 
@@ -73,7 +73,7 @@ public class Note extends RealmObject {
         return attachmentsList;
     }
 
-    public List<Notification> getNotificationsList() {
+    public List<NoteNotification> getNotificationsList() {
         return notificationsList;
     }
 

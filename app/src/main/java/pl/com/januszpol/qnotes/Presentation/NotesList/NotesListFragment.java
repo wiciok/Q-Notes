@@ -1,9 +1,14 @@
 package pl.com.januszpol.qnotes.Presentation.NotesList;
 
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
@@ -28,6 +33,7 @@ import pl.com.januszpol.qnotes.Model.Services.NoteService;
 import pl.com.januszpol.qnotes.Presentation.MainActivity;
 import pl.com.januszpol.qnotes.Presentation.NoteEdit.EditNoteFragment;
 import pl.com.januszpol.qnotes.R;
+import pl.com.januszpol.qnotes.notifications.NotificationPublisher;
 
 
 public class NotesListFragment extends Fragment
@@ -46,6 +52,7 @@ public class NotesListFragment extends Fragment
         noteService = new NoteService();
         notes = noteService.getAllNotes();
         Log.d("NotesListFrg", "size: " + notes.size());
+
     }
 
     @Override
@@ -56,6 +63,7 @@ public class NotesListFragment extends Fragment
         noteAdapter = new NoteAdapter(getActivity(), notes);
         listView.setAdapter(noteAdapter);
         registerForContextMenu(listView);
+        Log.d("onCreateView", "");
         return view;
     }
 
