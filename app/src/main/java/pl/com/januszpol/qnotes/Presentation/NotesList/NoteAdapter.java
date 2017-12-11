@@ -1,6 +1,7 @@
 package pl.com.januszpol.qnotes.Presentation.NotesList;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pl.com.januszpol.qnotes.Model.ObjectModel.Note;
+import pl.com.januszpol.qnotes.Model.Services.FontService;
 import pl.com.januszpol.qnotes.R;
 
 /**
@@ -48,6 +50,7 @@ public class NoteAdapter extends ArrayAdapter<Note> {
         final Note temp = getItem(position);
         viewHolder.title.setText(temp.getTopic());
         viewHolder.description.setText(temp.getDescription());
+        viewHolder.changeFont(FontService.getFont());
         return convertView;
     }
 
@@ -62,6 +65,11 @@ public class NoteAdapter extends ArrayAdapter<Note> {
     public class ViewHolder {
         TextView title;
         TextView description;
+
+        public void changeFont(Typeface font){
+            title.setTypeface(font);
+            description.setTypeface(font);
+        }
     }
 
     public long getItemId(int position)
