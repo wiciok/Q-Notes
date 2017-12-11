@@ -37,8 +37,11 @@ public class ShowNoteFragment extends Fragment {
     private INoteService noteService;
     private TextView topic;
     private TextView description;
+    private List<Date> list;
     private View view;
     private Note editNote;
+    private DateListAdapter listAdapter;
+    private ListView dataListView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -54,6 +57,15 @@ public class ShowNoteFragment extends Fragment {
         if(editNote!=null) {
            topic.setText(editNote.getTopic());
            description.setText(editNote.getDescription());
+
+            dataListView = view.findViewById(R.id.data_list_show);
+            list=new ArrayList<Date>();
+            for(NoteNotification x: editNote.getNotificationsList())
+            {
+                list.add(x.getExecuteDate());
+            }
+            listAdapter = new DateListAdapter(getActivity(), list);
+            dataListView.setAdapter(listAdapter);
         }
 
         return view;

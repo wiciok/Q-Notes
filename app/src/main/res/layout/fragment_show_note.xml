@@ -23,7 +23,7 @@
         </TableRow>
 
         <TableRow
-            android:layout_weight="1"
+            android:layout_weight="5"
             android:gravity="left">
             <TextView
                 android:id="@+id/description_show"
@@ -35,5 +35,23 @@
                 android:text="Treść"
                 android:textSize="70px" />
         </TableRow>
+        <TableRow
+            android:layout_weight="1"
+            android:gravity="left">
+            <TextView
+                android:layout_width="match_parent"
+                android:text="Powiadomienia"
+                android:textSize="60px"
+                android:paddingTop="50dp"/>
+        </TableRow>
+        <TableRow
+            android:layout_weight="1"
+            android:gravity="bottom">
+            <ListView
+                android:id="@+id/data_list_show"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </TableRow>
+
     </TableLayout>
 </LinearLayout>
