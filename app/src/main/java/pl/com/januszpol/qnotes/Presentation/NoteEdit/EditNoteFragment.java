@@ -112,7 +112,7 @@ public class EditNoteFragment extends Fragment {
                 editNote.setTopic(topic.getText().toString());
                 editNote.setDescription(description.getText().toString());
 
-               /* Aktualizacja powiadomień
+
                 List<Notification> listNoteNotification=editNote.getNotificationsList();
 
                 listNoteNotification.clear();
@@ -122,7 +122,7 @@ public class EditNoteFragment extends Fragment {
                     newNotification.setExecuteDate(x);
                     listNoteNotification.add(newNotification);
                 }
-                 */
+
 
                 noteService.updateNote(editNote);
 
